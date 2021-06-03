@@ -36,5 +36,5 @@ if ($status == false) {
   $error = $stmt->errorInfo();
   exit('sqlError:' . $error[2]);
 } else {
-  header('Location:chat_input.php');
+  header('Location:chat_input_output.php');
 };

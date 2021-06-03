@@ -144,16 +144,34 @@ if ($status == false) {
 
   <script>
     const data = <?= json_encode($result) ?>;
-
     console.log(data);
 
+    const tagArray = []; // `dataArray`は前回出てきたオブジェクトの配列
+    data.forEach(function(x) {
+      tagArray.push(`
+      <li id=${x.id}>
+        <p>${x.u_name}</p>
+        <p>${x.u_message}</p>
+        <p>${x.created_at}</p>
+      </li> `);
+    });
 
+    // 自分のメッセージは右、他人は左にしたかったけどできなかった！
+    // if (data.data.name != "比嘉") {
+    //   // $(this).parent.removeClass();
+    //   $(this).parent().addClass("other_message");
+    // }
 
+    $("#output").html(tagArray);
 
 
     $(document).ready(function() {
       hsize = $(window).height();
       $(".scroll").css("height", hsize - 185 + "px");
+
+      // スクロールの開始位置を常に一番下に設定 親要素にcssで「overflow: scroll;」しておく必要あり
+      let target = document.getElementById("output");
+      target.scrollIntoView(false);
     });
     $(window).resize(function() {
       hsize = $(window).height();
@@ -186,43 +204,6 @@ if ($status == false) {
     </fieldset>
   </form> -->
 
-
-<!-- db.orderBy("time", "asc").onSnapshot(function(querySnapshot) {
-// onSnapshotでcloud firestoreのデータ変更時に実行される!
-// querySnapshot.docsにcloud firestoreのデータが配列形式で入る
-const dataArray = []; // 必要なデータだけが入った新しい配列を作成
-querySnapshot.docs.forEach(function(doc) {
-const data = {
-id: doc.id,
-data: doc.data(),
-};
-dataArray.push(data);
-console.log(dataArray);
-});
-
-const tagArray = []; // `dataArray`は前回出てきたオブジェクトの配列
-dataArray.forEach(function(data) {
-tagArray.push(`
-<li id=${data.id}>
-  <p>${data.data.name}</p>
-  <p>${data.data.text}</p>
-  <p>${convertFromFirestoreTimestampToDatetime(
-    data.data.time.seconds
-    )}</p>
-</li> `);
-});
-
-// 自分のメッセージは右、他人は左にしたかったけどできなかった！
-// if (data.data.name != "比嘉") {
-// // $(this).parent.removeClass();
-// $(this).parent().addClass("other_message");
-// }
-
-$("#output").html(tagArray);
-// スクロールの開始位置を常に一番下に設定 親要素にcssで「overflow: scroll;」しておく必要あり
-let target = document.getElementById("output");
-target.scrollIntoView(false);
-}); -->
 
 <!-- textareaの自動リサイズ（メッセージ部分に被るので無効に）
 $(function () {
