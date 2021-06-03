@@ -75,7 +75,8 @@ if ($status == false) {
       overflow: scroll;
     }
 
-    #output li {
+    /* 自分のメッセージ */
+    #me {
       padding: 10px;
       border-radius: 10px;
       background: #1dcd00;
@@ -85,15 +86,17 @@ if ($status == false) {
       margin: 10px 0 10px auto;
     }
 
-    /* .other_message {
-        padding: 10px;
-        border-radius: 10px;
-        background: #ccc;
-        max-width: 200px;
-        font-size: 15px;
-        word-wrap: break-word;
-        margin: 10px 0 10px;
-      } */
+    /* 他人のメッセージ */
+    #others {
+      padding: 10px;
+      border-radius: 10px;
+      background: #ccc;
+      max-width: 200px;
+      font-size: 15px;
+      word-wrap: break-word;
+      margin: 10px 0 10px;
+    }
+
     form {
       display: flex;
       width: 100%;
@@ -127,7 +130,7 @@ if ($status == false) {
   <!-- 入力場所を作成しよう -->
   <form action="chat_create.php" method="POST">
     <ul>
-      <li>
+      <li class="mb-2">
         <label for="name">name</label>
         <input type="text" id="name" name="u_name">
       </li>
@@ -146,6 +149,14 @@ if ($status == false) {
     const data = <?= json_encode($result) ?>;
     console.log(data);
 
+    data.forEach(function(x) {
+      if (x.u_name == "比嘉") {
+        x.id = "me"
+      } else {
+        x.id = "others"
+      }
+    });
+
     const tagArray = []; // `dataArray`は前回出てきたオブジェクトの配列
     data.forEach(function(x) {
       tagArray.push(`
@@ -156,18 +167,12 @@ if ($status == false) {
       </li> `);
     });
 
-    // 自分のメッセージは右、他人は左にしたかったけどできなかった！
-    // if (data.data.name != "比嘉") {
-    //   // $(this).parent.removeClass();
-    //   $(this).parent().addClass("other_message");
-    // }
-
     $("#output").html(tagArray);
 
 
     $(document).ready(function() {
       hsize = $(window).height();
-      $(".scroll").css("height", hsize - 185 + "px");
+      $(".scroll").css("height", hsize - 186 + "px");
 
       // スクロールの開始位置を常に一番下に設定 親要素にcssで「overflow: scroll;」しておく必要あり
       let target = document.getElementById("output");
@@ -175,7 +180,7 @@ if ($status == false) {
     });
     $(window).resize(function() {
       hsize = $(window).height();
-      $(".scroll").css("height", hsize - 185 + "px");
+      $(".scroll").css("height", hsize - 186 + "px");
     });
   </script>
 
@@ -184,31 +189,3 @@ if ($status == false) {
 </body>
 
 </html>
-
-
-
-<!-- とりあえず残しているやつ 後で削除する -->
-<!-- <form action="todo_create.php" method="POST">
-    <fieldset>
-      <legend>DB連携型todoリスト（入力画面）</legend>
-      <a href="todo_read.php">一覧画面</a>
-      <div>
-        todo: <input type="text" name="todo">
-      </div>
-      <div>
-        deadline: <input type="date" name="deadline">
-      </div>
-      <div>
-        <button>submit</button>
-      </div>
-    </fieldset>
-  </form> -->
-
-
-<!-- textareaの自動リサイズ（メッセージ部分に被るので無効に）
-$(function () {
-$("#text").on("change keyup keydown paste cut", function () {
-if ($(this).outerHeight() > this.scrollHeight) {
-$(this).height(1);
-}
-while ($(this).outerHeight() < this.scrollHeight) { $(this).height($(this).height() + 1); } }); }); -->
