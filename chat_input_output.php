@@ -57,7 +57,7 @@ if ($status == false) {
 
     h1 {
       margin: 0;
-      padding: 20px 0 10px;
+      padding: 5px 0 5px;
       font-size: 16px;
     }
 
@@ -119,7 +119,7 @@ if ($status == false) {
 
 <body>
   <header>
-    <h1>LINE風チャットアプリ</h1>
+    <h1>＜PHP＞<br>LINE風チャットアプリ</h1>
   </header>
 
   <!-- データ出力場所 -->
@@ -172,7 +172,7 @@ if ($status == false) {
 
     $(document).ready(function() {
       hsize = $(window).height();
-      $(".scroll").css("height", hsize - 186 + "px");
+      $(".scroll").css("height", hsize - 185 + "px");
 
       // スクロールの開始位置を常に一番下に設定 親要素にcssで「overflow: scroll;」しておく必要あり
       let target = document.getElementById("output");
@@ -180,7 +180,7 @@ if ($status == false) {
     });
     $(window).resize(function() {
       hsize = $(window).height();
-      $(".scroll").css("height", hsize - 186 + "px");
+      $(".scroll").css("height", hsize - 185 + "px");
     });
   </script>
 
